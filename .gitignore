@@ -1,0 +1,9 @@
+*
+!.gitignore
+!README.md
+!HW?/
+!HW?/hw?.pdf
+!HW?/hw?_questions.pdf
+!HW?/hw?.tex
+!HW?/hw?.py
+!HW?/hw?.png
