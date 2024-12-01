@@ -7,7 +7,7 @@ from picketts import picketts
 from crouts import crouts
 
 max_n = 300
-n_values = range(1, max_n + 1)
+n_values = range(2, max_n + 1, 2)
 
 time_sherman = []
 rel_error_sherman = []

@@ -2,28 +2,41 @@ import numpy as np
 
 
 def picketts(A):
-    if not isinstance(A, np.ndarray):
-        A = np.array(A, dtype=float)
-    n = len(A)
+    """
+    Recursive LU Decomposition based on Pickett's Charge algorithm.
+    :param A: The input square matrix.
+    :return: L (Lower triangular matrix), U (Upper triangular matrix)
+    """
+    # Base case for recursion: 1x1 matrix
+    if A.shape[0] == 1:
+        return np.array([[1]]), A  # L=1, U=A for 1x1 matrix
 
-    # Base case
-    if n == 1:
-        return np.array([[1]]), np.array([[A[0, 0]]])
+    # A += 1e-12 * np.eye(A.shape[0])  # Add small perturbation to avoid singular matrix
 
-    L = np.eye(n)  # Initialize L as identity matrix
-    U = np.zeros((n, n))
+    # Partition A into blocks
+    k = 1  # Current column of focus
+    n = A.shape[0]
 
-    # First row of U directly from A
-    U[0, :] = A[0, :]
+    A11 = A[:k, :k]  # Top-left submatrix
+    a1k = A[:k, k:]  # Top-right column vector (2D)
+    ak1 = A[k:, :k]  # Bottom-left row vector (2D)
+    Akk = A[k:, k:]  # Bottom-right submatrix
 
-    # First column of L
-    L[1:, 0] = A[1:, 0] / U[0, 0]
+    # Recursive step to compute LU for A11
+    L11, U11 = picketts(A11)
 
-    A_reduced = A[1:, 1:] - np.outer(L[1:, 0], U[0, 1:])
-    L_sub, U_sub = picketts(A_reduced)
+    # Compute intermediate terms
+    u1k = np.linalg.solve(L11, a1k)  # Solve L11 * u1k = a1k
+    l_k1 = np.linalg.solve(U11.T, ak1.T).T  # Solve U11^T * l_k1^T = ak1^T
 
-    # Fill in recursive results
-    L[1:, 1:] = L_sub
-    U[1:, 1:] = U_sub
+    # Compute Schur complement (reduced Akk block)
+    vkk = Akk - l_k1 @ u1k
+
+    # Recursively compute LU decomposition for the Schur complement
+    Lkk, Ukk = picketts(vkk)
+
+    # Assemble the full L and U matrices
+    L = np.block([[L11, np.zeros((k, n - k))], [l_k1, Lkk]])
+    U = np.block([[U11, u1k], [np.zeros((n - k, k)), Ukk]])
 
     return L, U

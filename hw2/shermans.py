@@ -11,7 +11,7 @@ def shermans(A):
     if A.shape[0] == 1:
         return np.array([[1]]), A  # L=1, U=A for 1x1 matrix
 
-    A += 1e-10 * np.eye(A.shape[0])
+    A += 1e-12 * np.eye(A.shape[0])  # Add small perturbation to avoid singular matrix
 
     # Partition A into blocks
     n = A.shape[0]

@@ -14,19 +14,19 @@ print("Matrix A:")
 print(A)
 print()
 
-# Sherman's March
-start = time()
-L1, U1 = shermans(A)
-time_sherman = time() - start
-rel_error_sherman = np.linalg.norm(A - L1 @ U1, 2) / np.linalg.norm(A, 2)
+# # Sherman's March
+# start = time()
+# L1, U1 = shermans(A)
+# time_sherman = time() - start
+# rel_error_sherman = np.linalg.norm(A - L1 @ U1, 2) / np.linalg.norm(A, 2)
 
-print("Sherman L:")
-print(L1)
-print("Sherman U:")
-print(U1)
-print(f"Sherman error: {rel_error_sherman}\n")
-print(f"Multiplied L1 and U1:")
-print(L1 @ U1)
+# print("Sherman L:")
+# print(L1)
+# print("Sherman U:")
+# print(U1)
+# print(f"Sherman error: {rel_error_sherman}\n")
+# print(f"Multiplied L1 and U1:")
+# print(L1 @ U1)
 
 # # Pickett's Charge
 # start = time()
@@ -42,19 +42,19 @@ print(L1 @ U1)
 # print(f"Multiplied L2 and U2:")
 # print(L2 @ U2)
 
-# # Crout's Method
-# start = time()
-# L3, U3 = crouts(A)
-# time_crout = time() - start
-# rel_error_crout = np.linalg.norm(A - L3 @ U3, 2) / np.linalg.norm(A, 2)
+# Crout's Method
+start = time()
+L3, U3 = crouts(A)
+time_crout = time() - start
+rel_error_crout = np.linalg.norm(A - L3 @ U3, 2) / np.linalg.norm(A, 2)
 
-# print("Crout L:")
-# print(L3)
-# print("Crout U:")
-# print(U3)
-# print(f"Crout error: {rel_error_crout}\n")
-# print(f"Multiplied L3 and U3:")
-# print(L3 @ U3)
+print("Crout L:")
+print(L3)
+print("Crout U:")
+print(U3)
+print(f"Crout error: {rel_error_crout}\n")
+print(f"Multiplied L3 and U3:")
+print(L3 @ U3)
 
 # Built-in LU
 start = time()

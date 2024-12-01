@@ -2,29 +2,39 @@ import numpy as np
 
 
 def crouts(A):
+    """
+    Recursive LU Decomposition based on Crout's algorithm.
+    :param A: The input square matrix.
+    :return: L (Lower triangular matrix), U (Upper triangular matrix)
+    """
     if not isinstance(A, np.ndarray):
         A = np.array(A, dtype=float)
     n = len(A)
 
-    # Base case
-    if n == 1:
-        return np.array([[A[0, 0]]]), np.array([[1]])
-
-    # Initialize L and U
+    # Initialize matrices
     L = np.zeros((n, n))
     U = np.eye(n)
 
-    # First column of L is directly from A
-    L[:, 0] = A[:, 0]
-
-    # First row of U (except U[0,0]=1)
-    U[0, 1:] = A[0, 1:] / L[0, 0]
-
-    A_reduced = A[1:, 1:] - np.outer(L[1:, 0], U[0, 1:])
-    L_sub, U_sub = crouts(A_reduced)
-
-    # Fill in submatrices
-    L[1:, 1:] = L_sub
-    U[1:, 1:] = U_sub
+    # Recursive implementation
+    _crouts_recursive(A, L, U, 0, n)
 
     return L, U
+
+
+def _crouts_recursive(A, L, U, j, n):
+    # Base case
+    if j >= n:
+        return
+
+    # Compute L[:, j]
+    for i in range(j, n):
+        sum_l = sum(L[i, k] * U[k, j] for k in range(j))
+        L[i, j] = A[i, j] - sum_l
+
+    # Compute U[j, :]
+    for i in range(j + 1, n):
+        sum_u = sum(L[j, k] * U[k, i] for k in range(j))
+        U[j, i] = (A[j, i] - sum_u) / L[j, j]
+
+    # Recursive call for next column
+    _crouts_recursive(A, L, U, j + 1, n)
