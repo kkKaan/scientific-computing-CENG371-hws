@@ -24,3 +24,12 @@ def inverse_power(A, alpha):
     eigenvalue = alpha + 1 / eVal
 
     return eigenvalue, eVec
+
+
+if __name__ == "__main__":
+    # Q1.3
+    A = np.array([[2, -1, 0, 0, 0], [-1, 2, -1, 0, 0], [0, -1, 2, -1, 0], [0, 0, -1, 2, -1], [0, 0, 0, -1,
+                                                                                              2]])
+    eVal, eVec = inverse_power(A, 0.01)
+    print("Eigenvalue:", eVal)
+    print("Eigenvector:", eVec)
