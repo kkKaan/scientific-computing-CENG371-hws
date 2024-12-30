@@ -7,3 +7,7 @@
 !hw?/*.py
 !hw?/*.m
 !hw?/*.png
+!hw?/*.jpg
+!hw?/*.jpeg
+!hw?/*.mtx
+!hw?/*.zip
