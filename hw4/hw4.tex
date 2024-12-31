@@ -4,7 +4,8 @@
 \usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage{float}
-
+\usepackage{hyperref}
+\usepackage[all]{hypcap} % ensures hyperlinks jump to the figure, not the caption
 \usepackage{tkz-euclide}
 \usepackage{tikz}
 \usepackage{pgfplots}
@@ -241,7 +242,7 @@ Homework 4}
     Based on the observed error trends, run times, and visual reconstructions, 
     we outline some scenarios where \texttt{approximate\_svd} is particularly valuable:
     \begin{itemize}
-      \item \textbf{Large-Scale Image/Data Compression:} \\
+      \item \textbf{Large-Scale Image / Data Compression:} \\
       For very large matrices (e.g., huge images, big data in machine learning), 
       the randomized SVD often achieves near-optimal compression while 
       being significantly faster than exact methods.
