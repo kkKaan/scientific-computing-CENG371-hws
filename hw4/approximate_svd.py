@@ -137,7 +137,7 @@ def plot_results(k_list, times_approx, errs_approx, times_svds, errs_svds, title
     plt.legend()
     plt.grid(True)
     # plt.show()
-    plt.savefig(f'{title_prefix}_relative_error_vs_k.png')
+    # plt.savefig(f'{title_prefix}_relative_error_vs_k.png')
 
     # 2) Runtime vs. k
     plt.figure(figsize=(6, 5))
@@ -149,7 +149,20 @@ def plot_results(k_list, times_approx, errs_approx, times_svds, errs_svds, title
     plt.legend()
     plt.grid(True)
     # plt.show()
-    plt.savefig(f'{title_prefix}_run_time_vs_k.png')
+    # plt.savefig(f'{title_prefix}_run_time_vs_k.png')
+
+
+def reconstruct_and_display(A, method_name, U, S, V, k):
+    """
+    Helper function to reconstruct an image from U, S, V and display it with plt.imshow().
+    """
+    approx_img = U @ S @ V.T
+    plt.figure()
+    plt.imshow(approx_img, cmap='gray', vmin=0, vmax=1)
+    plt.title(f'{method_name} Reconstruction, rank={k}')
+    plt.axis('off')
+    # plt.show()
+    plt.savefig(f'{method_name}_reconstruction_rank_{k}.png')
 
 
 if __name__ == "__main__":
@@ -198,5 +211,37 @@ if __name__ == "__main__":
                  times_svds_fpt,
                  errs_svds_fpt,
                  title_prefix="Fingerprint")
+
+    # ---------- 2) QUALITATIVE COMPARISONS ----------
+    # Reconstruct images at chosen ranks
+    chosen_ks = [10, 50, 100]
+
+    for k in chosen_ks:
+        # approximate_svd on cameraman
+        U_k, S_k, V_k = approximate_svd(A_cam, k, p=5)
+        reconstruct_and_display(A_cam, f"Approx SVD (Cameraman)", U_k, S_k, V_k, k)
+
+        # svds on cameraman
+        U_s, S_s, V_sT = svds(A_cam, k=k, which='LM')
+        # reorder descending
+        idx = np.argsort(-S_s)
+        S_s = S_s[idx]
+        U_s = U_s[:, idx]
+        V_sT = V_sT[idx, :]
+        reconstruct_and_display(A_cam, f"svds (Cameraman)", U_s, np.diag(S_s), V_sT.T, k)
+
+    # Do similarly for fingerprint
+    for k in chosen_ks:
+        # approximate_svd
+        U_k, S_k, V_k = approximate_svd(A_fpt, k, p=5)
+        reconstruct_and_display(A_fpt, f"Approx SVD (Fingerprint)", U_k, S_k, V_k, k)
+
+        # svds
+        U_s, S_s, V_sT = svds(A_fpt, k=k, which='LM')
+        idx = np.argsort(-S_s)
+        S_s = S_s[idx]
+        U_s = U_s[:, idx]
+        V_sT = V_sT[idx, :]
+        reconstruct_and_display(A_fpt, f"svds (Fingerprint)", U_s, np.diag(S_s), V_sT.T, k)
 
     print("All comparisons complete.")

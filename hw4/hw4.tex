@@ -233,28 +233,32 @@ Homework 4}
       \item At $k=50$, the images become much clearer. While a pixel-wise difference might show 
       \texttt{svds} is still better, \texttt{approximate\_svd} is visually close.
       
-      \item By $k=100$ or $150$, the randomized approach is nearly indistinguishable 
+      \item By $k=100$ or $150$, the randomized approach is nearly indistinguishable, with still some differences, 
       from the exact truncated SVD in normal viewing.
     \end{itemize}
 
-    \item \textbf{Suggested use cases.} \\
-    Based on these updated error trends and timing behaviors:
+    \item \textbf{Suggested Use Cases for \texttt{approximate\_svd}.}\\
+    Based on the observed error trends, run times, and visual reconstructions, 
+    we outline some scenarios where \texttt{approximate\_svd} is particularly valuable:
     \begin{itemize}
-      \item \textbf{Large-scale image/data compression:} 
-      The speed benefits of \texttt{approximate\_svd} grow with matrix size 
-      or rank, making it ideal for compressing big data.
+      \item \textbf{Large-Scale Image/Data Compression:} \\
+      For very large matrices (e.g., huge images, big data in machine learning), 
+      the randomized SVD often achieves near-optimal compression while 
+      being significantly faster than exact methods.
       
-      \item \textbf{Real-time / streaming SVD computations:} 
-      Its relative speed and one-pass nature in certain algorithms 
-      allow for frequent updates without a full recomputation.
+      \item \textbf{Real-Time / Streaming Computations:} \\
+      If we need to update or compute truncated SVD in streaming or near-real-time settings, 
+      randomized methods avoid the heavy re-factorizations of classical approaches.
       
-      \item \textbf{Exploratory data analysis (PCA-like tasks):}
-      For large datasets (e.g., thousands/millions of rows), 
-      an approximate basis is often sufficient to capture the main variance.
+      \item \textbf{Exploratory Data Analysis (PCA-like tasks):} \\
+      In many practical situations, an approximate subspace is sufficient to capture 
+      the main variance of the data, making \texttt{approximate\_svd} a good choice 
+      for large-scale PCA or latent semantic analysis.
       
-      \item \textbf{Machine learning pipelines:}
+      \item \textbf{Machine Learning Pipelines:} \\
       Dimensionality reduction (feature extraction) with approximate SVD 
-      saves both memory and time, critical in big-data ML.
+      saves both time and memory, especially important when dealing with 
+      massive training sets. 
     \end{itemize}
 
 \end{enumerate}
