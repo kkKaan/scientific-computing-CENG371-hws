@@ -239,6 +239,11 @@ Homework 4}
       from the exact truncated SVD in normal viewing.
     \end{itemize}
 
+    From these reconstructed images, we can see that for small $k$,
+    one should use \texttt{svds} for both better quality and speed. 
+    However, as $k$ grows, the randomized approach becomes more competitive
+    in terms of error, and runs much faster than \texttt{svds} for larger ranks.
+
     Here you can see the reconstructed images for \(k=10\) and \(k=100\) for both images and algorithms:
     
     \begin{figure}[H]
