@@ -3,6 +3,7 @@
 \usepackage{amsfonts, amsmath, pifont}
 \usepackage{amsthm}
 \usepackage{graphicx}
+\usepackage{subcaption}
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage[all]{hypcap} % ensures hyperlinks jump to the figure, not the caption
@@ -237,6 +238,78 @@ Homework 4}
       \item By $k=100$ or $150$, the randomized approach is nearly indistinguishable, with still some differences, 
       from the exact truncated SVD in normal viewing.
     \end{itemize}
+
+    Here you can see the reconstructed images for \(k=10\) and \(k=100\) for both images and algorithms:
+    
+    \begin{figure}[H]
+      \centering
+      %--------------- First Row ---------------
+      \begin{subfigure}[b]{0.35\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Approx SVD (Cameraman)_reconstruction_rank_10.png}
+        \caption{Approx SVD, $k=10$}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}[b]{0.35\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{svds (Cameraman)_reconstruction_rank_10.png}
+          \caption{\texttt{svds}, $k=10$}
+      \end{subfigure}
+      
+      \vspace{0.5em} % some vertical space if needed
+    
+      %--------------- Second Row ---------------
+      \begin{subfigure}[b]{0.35\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{Approx SVD (Cameraman)_reconstruction_rank_100.png}
+          \caption{Approx SVD, $k=100$}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}[b]{0.35\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{svds (Cameraman)_reconstruction_rank_100.png}
+          \caption{\texttt{svds}, $k=100$}
+      \end{subfigure}
+
+      \caption{Reconstructed images for Cameraman at ranks $k=10$ and $k=100$.}
+
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      %--------------- First Row ---------------
+      \begin{subfigure}[b]{0.35\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Approx SVD (Fingerprint)_reconstruction_rank_10.png}
+        \caption{Approx SVD, $k=10$}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}[b]{0.35\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{svds (Fingerprint)_reconstruction_rank_10.png}
+          \caption{\texttt{svds}, $k=10$}
+      \end{subfigure}
+      
+      \vspace{0.5em} % some vertical space if needed
+    
+      %--------------- Second Row ---------------
+      \begin{subfigure}[b]{0.35\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{Approx SVD (Fingerprint)_reconstruction_rank_100.png}
+          \caption{Approx SVD, $k=100$}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}[b]{0.35\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{svds (Fingerprint)_reconstruction_rank_100.png}
+          \caption{\texttt{svds}, $k=100$}
+      \end{subfigure}
+
+      \caption{Reconstructed images for Fingerprint at ranks $k=10$ and $k=100$.}
+
+    \end{figure}
+
+    \newpage
 
     \item \textbf{Suggested Use Cases for \texttt{approximate\_svd}.}\\
     Based on the observed error trends, run times, and visual reconstructions, 
