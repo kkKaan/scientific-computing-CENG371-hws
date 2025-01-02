@@ -50,6 +50,9 @@ def load_image_as_matrix(path, as_gray=True):
     """
     Load an image from `path` and convert it to a numpy float64 matrix in [0,1].
     as_gray=True: convert to grayscale if the image is RGB.
+
+    Returns:
+        img : np.ndarray, shape (m, n)
     """
     img = io.imread(path)  # shape could be (m, n) or (m, n, 3)
     if img.ndim == 3 and as_gray:
@@ -65,6 +68,15 @@ def compute_relative_error(A, U, S, V):
     """
     Compute the relative error = ||A - USV^T||_2 / ||A||_2,
     using the spectral norm (largest singular value).
+
+    Args:
+        A : np.ndarray, shape (m, n)
+        U : np.ndarray, shape (m, k)
+        S : np.ndarray, shape (k, k)
+        V : np.ndarray, shape (n, k)
+
+    Returns:
+        float: Relative error.
     """
     # Reconstruct
     approx = U @ S @ V.T
@@ -81,6 +93,17 @@ def run_comparison(A, k_list, p=5):
       - Time and relative error of approximate_svd(A, k)
       - Time and relative error of scipy.sparse.linalg.svds(A, k)
     Returns dictionaries of times and errors for plotting.
+
+    Args:
+        A : np.ndarray, shape (m, n)
+        k_list : list of int
+        p : int, optional, default=5
+    
+    Returns:
+        times_approx : list of float
+        errs_approx : list of float
+        times_svds : list of float
+        errs_svds : list of float
     """
     times_approx = []
     errs_approx = []
@@ -126,6 +149,17 @@ def plot_results(k_list, times_approx, errs_approx, times_svds, errs_svds, title
     Generate two plots:
       1) Relative error vs. k
       2) Run time vs. k
+
+    Args:
+        k_list : list of int
+        times_approx : list of float
+        errs_approx : list of float
+        times_svds : list of float
+        errs_svds : list of float
+        title_prefix : str
+
+    Returns:
+        None
     """
     # 1) Relative error vs. k
     plt.figure(figsize=(6, 5))
